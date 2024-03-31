@@ -35,10 +35,10 @@ class llama_web():
         return st.session_state.chat_log
 
     def chat(self):
-        st.title("My chatbot")
-        st.header("Custom trained LLaMA model")
-        st.subheader("fastcampus")
-        st.caption("created by summer")
+        st.title("Personal LLM Project")
+        st.header("Chatting with LLaMA")
+        st.subheader("Please type a message only in English to chat with LLaMA.")
+        st.caption("Hyun-Gook Kang")
 
         # 채팅 로그를 스크롤 가능한 컨테이너에 출력
         chat_container = st.container()
