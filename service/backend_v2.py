@@ -6,7 +6,7 @@ app = FastAPI()
 
 tokenizer = None
 model = None
-
+device = None
 
 
 
@@ -15,7 +15,7 @@ model = None
 
 @app.on_event("startup")
 async def load_model():
-    global tokenizer, model
+    global tokenizer, model, device
     tokenizer = AutoTokenizer.from_pretrained("Birchlabs/llama-13b-stepwise-tokenizer")
     model = LlamaForCausalLM.from_pretrained('h2oai/h2ogpt-4096-llama2-7b-chat')
 
