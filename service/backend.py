@@ -13,12 +13,22 @@ tokenizer = AutoTokenizer.from_pretrained("Birchlabs/llama-13b-stepwise-tokenize
 # jodiambra/llama-2-7b-finetuned-python-qa_tokenizer
 
 # load model
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 model = LlamaForCausalLM.from_pretrained('h2oai/h2ogpt-4096-llama2-7b-chat')
 # h2oai/h2ogpt-4096-llama2-7b-chat
 # h2oai/h2ogpt-4096-llama2-13b-chat
 
+
+if torch.cuda.is_available():
+    device = torch.device('cuda')
+    n_gpus = torch.cuda.device_count()
+    if n_gpus > 1:
+        model = torch.nn.DataParallel(model, device_ids=list(range(n_gpus)))
+
+else:
+    device = torch.device('cpu')
+
 model.to(device)
+# device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 
 def get_answer(prompt):

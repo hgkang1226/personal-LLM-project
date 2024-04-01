@@ -6,13 +6,28 @@ app = FastAPI()
 
 tokenizer = None
 model = None
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+
+
+
+
+# device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 @app.on_event("startup")
 async def load_model():
     global tokenizer, model
     tokenizer = AutoTokenizer.from_pretrained("Birchlabs/llama-13b-stepwise-tokenizer")
     model = LlamaForCausalLM.from_pretrained('h2oai/h2ogpt-4096-llama2-7b-chat')
+
+    if torch.cuda.is_available():
+        device = torch.device('cuda')
+        n_gpus = torch.cuda.device_count()
+        if n_gpus > 1:
+            model = torch.nn.DataParallel(model, device_ids=list(range(n_gpus)))
+
+    else:
+        device = torch.device('cpu')
+
     model.to(device)
 
 def get_answer(prompt):
