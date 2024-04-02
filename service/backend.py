@@ -41,16 +41,10 @@ def get_answer(prompt):
                                   num_beams=1, no_repeat_ngram_size=3, early_stopping=True)
     
     output = tokenizer.batch_decode(generate_ids, skip_special_tokens=True, clean_up_tokenization_spaces=False)[0]
-    output = output[len(prompt):]
-
-    # Remove incomplete sentences or words at the beginning
-    output = re.sub(r'^[^A-Z][^A-Z\.\!\?]*', '', output)
-
-    sentences = output.split('. ')
-    first_sentence = sentences[0].strip()
     
-    return first_sentence + '.'
-    # return output
+    output = re.sub(r'^.*?[.?!]', '', output)
+    
+    return output.strip()
 
 # def get_answer(prompt):
     
