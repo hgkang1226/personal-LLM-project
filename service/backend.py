@@ -44,6 +44,9 @@ def get_answer(prompt):
     
     output = re.sub(r'^.*?[.?!]', '', output)
     
+    if not output.endswith(('!', '?', '.')):
+        output = re.sub(r'[^.!?]*$', '', output)
+    
     return output.strip()
 
 # def get_answer(prompt):
