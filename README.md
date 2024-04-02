@@ -26,3 +26,11 @@ This command:
 * ```-w 4```: Uses 4 worker processes.
 * ```-k uvicorn.workers.UvicornWorker```: Uses Uvicorn workers to support asynchronous execution.
 You can adjust the number of workers (-w) according to your needs.
+
+### Testing
+
+To check if API endpoint works correctly, you can use the following command line
+
+```bash
+curl -X POST -H "Content-Type: application/json" -d '{"user_message": "Hello, how are you?"}' http://localhost:8000/chat
+```

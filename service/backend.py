@@ -13,16 +13,18 @@ tokenizer = AutoTokenizer.from_pretrained("Birchlabs/llama-13b-stepwise-tokenize
 # jodiambra/llama-2-7b-finetuned-python-qa_tokenizer
 
 # load model
-model = LlamaForCausalLM.from_pretrained('h2oai/h2ogpt-4096-llama2-7b-chat')
+model = LlamaForCausalLM.from_pretrained('princeton-nlp/Sheared-LLaMA-1.3B')
+
 # h2oai/h2ogpt-4096-llama2-7b-chat
 # h2oai/h2ogpt-4096-llama2-13b-chat
-
+# h2oai/h2ogpt-4096-llama2-7b-chat
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-if torch.cuda.is_available():
-    n_gpus = torch.cuda.device_count()
-    if n_gpus > 1:
-        model = torch.nn.DataParallel(model, device_ids=list(range(n_gpus)))
+# in case of multi GPUs
+# if torch.cuda.is_available():
+#     n_gpus = torch.cuda.device_count()
+#     if n_gpus > 1:
+#         model = torch.nn.DataParallel(model, device_ids=list(range(n_gpus)))
 
 model.to(device)
 
