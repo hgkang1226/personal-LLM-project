@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 import torch
 from transformers import LlamaForCausalLM, AutoTokenizer
+import re
 # uvicorn backend:app --reload
 
 # Initialize instance of FastAPI
@@ -36,12 +37,15 @@ def get_answer(prompt):
     inputs.to(device)
     
     # Generate
-    generate_ids = model.generate(inputs.input_ids, max_length=256, 
+    generate_ids = model.generate(inputs.input_ids, max_length=128, 
                                   num_beams=1, no_repeat_ngram_size=3, early_stopping=True)
     
     output = tokenizer.batch_decode(generate_ids, skip_special_tokens=True, clean_up_tokenization_spaces=False)[0]
     output = output[len(prompt):]
-    
+
+    # Remove incomplete sentences or words at the beginning
+    output = re.sub(r'^[^A-Z][^A-Z\.\!\?]*', '', output)
+
     sentences = output.split('. ')
     first_sentence = sentences[0].strip()
     
