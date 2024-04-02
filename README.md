@@ -23,6 +23,6 @@ gunicorn backend:app -w 4 -k uvicorn.workers.UvicornWorker
 ```
 This command:
 
-* ```-w``` 4: Uses 4 worker processes.
-* ```-k``` uvicorn.workers.UvicornWorker: Uses Uvicorn workers to support asynchronous execution.
+* ```-w 4```: Uses 4 worker processes.
+* ```-k uvicorn.workers.UvicornWorker```: Uses Uvicorn workers to support asynchronous execution.
 You can adjust the number of workers (-w) according to your needs.
