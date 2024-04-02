@@ -42,11 +42,11 @@ def get_answer(prompt):
     output = tokenizer.batch_decode(generate_ids, skip_special_tokens=True, clean_up_tokenization_spaces=False)[0]
     output = output[len(prompt):]
     
-    # sentences = output.split('. ')
-    # first_sentence = sentences[0].strip()
+    sentences = output.split('. ')
+    first_sentence = sentences[0].strip()
     
-    # return first_sentence + '.'
-    return output
+    return first_sentence + '.'
+    # return output
 
 # def get_answer(prompt):
     
